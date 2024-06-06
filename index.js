@@ -12,6 +12,11 @@ const ScanType = Object.freeze({
   SCA: 'SCA' // Software Composition Analysis
 })
 
+const Environment = Object.freeze({
+  QA: 'QA', // QA
+  PROD: 'PROD' // Production
+})
+
 async function insertRecord (scan) {
   try {
     return await knex.transaction(async (trx) => {
@@ -22,6 +27,7 @@ async function insertRecord (scan) {
           service_code: scan.serviceCode,
           scan_app_code: scan.scanAppCode,
           scan_type_code: scan.scanTypeCode,
+          environment_code: scan.environmentCode,
           critical_count: scan.criticalCount,
           high_count: scan.highCount,
           medium_count: scan.mediumCount,
@@ -44,6 +50,7 @@ const scanId = await insertRecord({
   serviceCode: 'benefits-service',
   scanAppCode: ScanApp.CHECKMARX,
   scanTypeCode: ScanType.SAST,
+  environmentCode: Environment.PROD,
   criticalCount: 1,
   highCount: 2,
   mediumCount: 3,
