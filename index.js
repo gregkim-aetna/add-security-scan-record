@@ -20,8 +20,6 @@ const Environment = Object.freeze({
 async function insertRecord (scan) {
   try {
     return await knex.transaction(async (trx) => {
-      const currentDate = new Date()
-
       const result = await trx('scan')
         .insert({
           service_code: scan.serviceCode,
@@ -33,9 +31,7 @@ async function insertRecord (scan) {
           medium_count: scan.mediumCount,
           low_count: scan.lowCount,
           notes: scan.notes,
-          scan_date_time: scan.scanDateTime.toISOString(),
-          created_date_time: currentDate.toISOString(),
-          modified_date_time: currentDate.toISOString()
+          scan_date_time: scan.scanDateTime.toISOString()
         })
         .returning('scan_id')
 
